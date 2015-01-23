@@ -1,0 +1,164 @@
+This is an OpenGL tree scene written entirely in Haskell.  It was written as a
+homework for CSCI 4229 computer graphics class.
+
+Michael R. Shannon
+michael.shannon@colorado.edu
+
+
+
+
+Dependencies:
+
+    + GHC (Haskell compiler)
+    + Cabal >= 1.18 (Haskell build tool)
+    + GLUT
+
+
+
+
+Ubuntu 14.04 Specific Instructions:
+
+    All non Haskell packages:
+
+        apt-get install freeglut3-dev
+
+    Because Ubuntu 14.04 LTS did not include the current 2014.2.0.0 Haskell
+    Platform release.  The source code has been modified to work with the GHC
+    version included with Ubuntu 14.04 LTS but Cabal >= 1.18 is required while
+    14.04 LTS includes 1.16.  This leads to two solutions.
+
+    Solution 1:
+
+        Install the Haskell Platform from source or binary form from
+        https://www.haskell.org/platform/linux.html
+
+
+    Solution 2:
+
+        Install the outdated Haskell platform:
+
+            apt-get install haskell-platform
+
+        Now prepend $HOME/.cabal/bin to your permanent PATH.
+
+            export PATH=$HOME/.cabal/bin:$PATH
+
+        NOTE: it is safe to do this in your shell configuration.
+
+        Now as like most problems in Haskell we solve it recursively by running
+        (not as root):
+
+            cabal update
+            cabal install cabal-install
+
+
+
+
+Building:
+
+    NOTE: Due to GLUtil (used for loading the textures) the build dependency
+    list is much longer.  This means the build will take 3-5 minutes.  If you
+    wish to avoid this build time a pre-compiled 64bit binary for Linux is
+    included.
+
+    This program can be built with the given `Makefile`.
+
+    Using make will automatically create a Cabal sandbox and install all needed
+    Haskell dependencies.  The default make rule will build a statically linked
+    `planetoid` binary in the top level directory.  The optional make rules are
+    listed below.
+
+    Build program statically:
+
+        make static
+
+    Build program dynamically:
+
+        make dynamic
+
+    NOTE: If you make a dynamic executable it will need the sandbox to remain in
+    the same location for it to run.  However, it will reduce the size of the
+    executable by up up 1-2 orders of magnitude.
+
+    Clean up temporary build files:
+
+        make clean-tmp
+
+    Clean up build files and executable (does not remove sandbox):
+
+        make clean
+
+    Clean up everything, including the sandbox:
+
+        make clean-all
+
+    NOTE: Do not be alarmed at large CPU usage as the Makefile is setup to install
+    the dependencies in parallel.
+
+
+
+
+Features:
+
+    Forest:
+        This program draws a forest with 2000 trees so a good system is
+        required.  It will run on Intel HD 4000 graphics cards and above but
+        will not perform well without a dedicated GPU.
+
+    Mipmapping:
+        This program uses mipmapping but only on OpenGL version 3.0 and higher.
+
+    Day/Night Cycle:
+        This program has a day night cycle with long days and short nights.
+
+    Skybox:
+        This program uses a skybox but only of limited size as I could not find
+        a higher resolution one for free.
+
+
+
+
+Usage:
+
+    arrow keys = rotate the camera
+
+    wsad = move camera
+
+    shift/space = lower/raise camera
+
+    c = change camera type (perspective/orthogonal)
+
+    v = change shading type (flat/smooth/wire)
+
+    p = pause/resume the animation
+
+    [ or ] = step back/forward animation
+
+
+
+
+Time Took: 
+
+    1.5 days.
+
+
+
+
+References:
+    
+    Pine leaves texture from texturemate.com:
+         http://www.texturemate.com/content/free-leaves-texture-15102010-006       
+
+    Wood bark texture from mb3b.co.uk (maxTextures.com):
+        http://www.mb3d.co.uk/mb3d/Bark_and_Tree_Seamless_and_Tileable_High_Res_Textures_files/Bark_04_UV_H_CM_1.jpg
+
+    Snow texture modified from mb3b.co.uk (maxTextures.com):
+        http://www.mb3d.co.uk/mb3d/Grass_and_Snow_Ground_Seamless_and_Tileable_High_Res_Textures_files/Snow_01_UV_H_CM_1.jpg
+
+    Sun texture modified from http://planetpixelemporium.com:
+        http://planetpixelemporium.com/sun.html
+
+    Skybox from redsorceress.com:
+        http://www.redsorceress.com/skybox.html
+
+
